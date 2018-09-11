@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Button, Text } from 'react-native';
+import { TITLE } from '../constants';
 
 export default class MainPage extends React.Component {
     constructor(props) {
@@ -9,22 +10,20 @@ export default class MainPage extends React.Component {
     render() {
         return (
             <View>
-                <Text>Follow Fashion</Text>
+                <Text>{TITLE}</Text>
                 <Button
                     onPress={() => {
-                        this.props.navigation.navigate('CameraPage');
+                        this.props.navigation.navigate('UploadPage');
                     }}
-                    title='Take a photo'
+                    title='Get Started'
                 />
                 <Button
                     onPress={()=>{
-                        this.props.navigation.navigate('UploadPage');
+                        //this.props.navigation.navigate('AboutPage');
                     }}
-                    title='Upload an image'
+                    title='About'
                 />
             </View>
         );
     }
-
 }
-
