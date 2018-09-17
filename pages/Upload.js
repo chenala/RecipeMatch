@@ -6,15 +6,19 @@ import {
     Image,
     StyleSheet,
 } from 'react-native';
+import { bindActionCreators } from 'redux';
+import {connect} from 'react-redux';
 import ImagePicker from 'react-native-image-picker';
 import { readFile } from "react-native-fs";
+
 import { CLARFAI_API_KEY } from '../apiKeys';
 import { CLARIFAI_FOOD_MODEL } from '../constants';
+import { resetStore, addIngredient } from '../store/actions/actionCreators';
 
 const Clarifai = require('clarifai');
 const app = new Clarifai.App({apiKey: CLARFAI_API_KEY});
 
-export default class UploadPage extends React.Component {
+class UploadPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -30,14 +34,13 @@ export default class UploadPage extends React.Component {
     callCamera() {
         ImagePicker.launchCamera({title: "Take a Photo", maxWidth: 800, maxHeight: 600}, res => {
             if (res.didCancel) {
-              console.log("User cancelled!");
+                console.log("user cancelled");
             } else if (res.error) {
-              console.log("Error", res.error);
+                console.log("Error", res.error);
             } else {
-              this.setState({
+                this.setState({
                 pickedImage: { uri: res.uri }
-              });
-              
+                });  
             }
         });
     }
@@ -45,14 +48,13 @@ export default class UploadPage extends React.Component {
     callImageUpload() {
         ImagePicker.launchImageLibrary({title: "Pick an Image", maxWidth: 800, maxHeight: 600}, res => {
             if (res.didCancel) {
-              console.log("User cancelled!");
+                console.log("user cancelled");
             } else if (res.error) {
-              console.log("Error", res.error);
+                console.log("Error", res.error);
             } else {
-              this.setState({
-                pickedImage: { uri: res.uri }
-              });
-              
+                this.setState({
+                    pickedImage: { uri: res.uri }
+                });
             }
         });
     }
@@ -82,7 +84,12 @@ export default class UploadPage extends React.Component {
                 return filteredResults;
             })
             .then((filteredResults) => {
-                this.props.navigation.navigate('Ingredients', {conceptsList: filteredResults});
+                this.props.resetStore();
+                filteredResults.forEach((concept) => {
+                    this.props.addIngredient(concept);
+                });
+
+                this.props.navigation.navigate('IngredientsPage', {conceptsList: filteredResults});
             })
             .catch((err) => {
                 console.log(err);
@@ -125,6 +132,18 @@ export default class UploadPage extends React.Component {
           );
     }
 }
+
+function mapStateToProps(state) {
+    return {
+        ingredients: state.ingredients,
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({ resetStore: resetStore, addIngredient: addIngredient }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(UploadPage);
 
 
 const styles = StyleSheet.create({
