@@ -119,7 +119,7 @@ class UploadPage extends React.Component {
                     <Button
                         title='back to main page'
                         onPress={() => {
-                            this.props.navigation.navigate('MainPage');
+                            this.props.navigation.goBack();
                         }}
                     />
                     <Button
@@ -142,9 +142,6 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({ resetStore: resetStore, addIngredient: addIngredient }, dispatch);
 }
-
-export default connect(mapStateToProps, mapDispatchToProps)(UploadPage);
-
 
 const styles = StyleSheet.create({
     container: {
@@ -170,4 +167,6 @@ const styles = StyleSheet.create({
         width: "100%",
         height: "100%"
     }
-  });
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(UploadPage);

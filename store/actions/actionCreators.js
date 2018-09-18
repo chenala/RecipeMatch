@@ -1,4 +1,4 @@
-import { TOGGLE_INGREDIENT, ADD_INGREDIENT, RESET_STORE } from './actionTypes';
+import { TOGGLE_INGREDIENT, ADD_INGREDIENT, RESET_STORE, TOGGLE_COURSE, ADD_COURSE } from './actionTypes';
 
 function toggleIngredient(ingredient) {
     return {
@@ -14,6 +14,20 @@ function addIngredient(ingredient) {
     };
 }
 
+function toggleCourse(course) {
+    return {
+        type: TOGGLE_COURSE,
+        course,
+    };
+}
+
+function addCourse(courseName) {
+    return {
+        type: ADD_COURSE,
+        course: courseName,
+    };
+}
+
 function resetStore() {
     return {
         type: RESET_STORE,
@@ -23,6 +37,8 @@ function resetStore() {
 export {
     toggleIngredient,
     addIngredient,
+    toggleCourse,
+    addCourse,
     resetStore,
 };
 

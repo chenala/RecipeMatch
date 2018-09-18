@@ -3,6 +3,7 @@ import {
     View,
     Button,
     ScrollView,
+    StyleSheet,
     Text,
 } from 'react-native';
 import {connect} from 'react-redux';
@@ -16,18 +17,19 @@ class Ingredients extends React.Component {
         this.state = {
             concepts: [],
         };
-        this.makeConceptElements = this.makeConceptElements.bind(this);
+        this.makeElements = this.makeElements.bind(this);
+        this.selectAll = this.selectAll.bind(this);
     }
     render() {
-        const conceptElements = this.makeConceptElements(this.props.navigation.state.params.conceptsList);
+        const conceptElements = this.makeElements(this.props.navigation.state.params.conceptsList);
         const continueDisabled = conceptElements.numOfSelections <= 0;
         return (
-            <View>
+            <View style={styles.container}>
                 <Text>Select what to include in the recipe</Text>
                 <Button
-                    title="Proceed to match recipes"
+                    title="Proceed to select recipe course"
                     onPress={() => {
-                        this.props.navigation.navigate('ResultsPage');
+                        this.props.navigation.navigate('FilterPage');
                     }}
                     disabled={continueDisabled}
                 />
@@ -37,13 +39,26 @@ class Ingredients extends React.Component {
                         this.props.navigation.goBack();
                     }}
                 />
-                <ScrollView>
-                    <Text>This is a ScrollView</Text>
+                <ScrollView style={styles.scroll}>
+                    <Button
+                        title='Select All'
+                        onPress={() => {
+                            this.selectAll(this.props.navigation.state.params.conceptsList);
+                        }}
+                    />
                     {conceptElements.buttonList}
                 </ScrollView>
                 
             </View>
         );
+    }
+
+    selectAll(concepts) {
+        concepts.forEach((concept) => {
+            if (!this.props.ingredients[concept.id].selected) {
+                this.props.toggleIngredient(Object.assign({}, concept));
+            }
+        });
     }
 
     /**
@@ -53,7 +68,7 @@ class Ingredients extends React.Component {
      * image.
      * @returns {Object} {list of buttons to display, the number of ingredients currently selected}
      */
-    makeConceptElements(concepts) {
+    makeElements(concepts) {
         let numOfSelections = 0;
         const buttonList = concepts.map((concept) => {
             const color = this.props.ingredients[concept.id].selected ? SELECTED_COLOR : UNSELECTED_COLOR;
@@ -87,3 +102,13 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Ingredients);
+
+
+const styles = StyleSheet.create({
+    scroll: {
+        margin: 10,
+    },
+    container: {
+        flex: 1,
+    }
+});

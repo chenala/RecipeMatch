@@ -19,7 +19,7 @@ export default class MainPage extends React.Component {
                 />
                 <Button
                     onPress={()=>{
-                        //this.props.navigation.navigate('AboutPage');
+                        this.props.navigation.navigate('AboutPage');
                     }}
                     title='About'
                 />

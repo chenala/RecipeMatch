@@ -1,4 +1,7 @@
 export const TOGGLE_INGREDIENT = 'TOGGLE_INGREDIENT';
 export const ADD_INGREDIENT = 'ADD_INGREDIENT';
 
+export const TOGGLE_COURSE = 'TOGGLE_COURSE';
+export const ADD_COURSE = 'ADD_COURSE';
+
 export const RESET_STORE = 'RESET_STORE';

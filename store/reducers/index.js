@@ -1,8 +1,9 @@
 import {combineReducers} from 'redux';
 import ingredientReducer from './ingredientReducer';
+import courseReducer from './courseReducer';
 
 /**
- * State structure (so far):
+ * Store:
  * {
  *      ingredients: {
  *          <ingredient_id>: {
@@ -11,11 +12,17 @@ import ingredientReducer from './ingredientReducer';
  *              selected: <boolean>,
  *          }
  *      },
+ *      courses: {
+ *          <course_name>: {
+ *              selected: <boolean>
+ *          }
+ *      }
  * }
  */
 
 const reducers = combineReducers({
     ingredients: ingredientReducer,
+    courses: courseReducer,
 });
 
 export default reducers;
