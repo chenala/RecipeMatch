@@ -25,7 +25,6 @@ class Ingredients extends React.Component {
         const continueDisabled = conceptElements.numOfSelections <= 0;
         return (
             <View style={styles.container}>
-                <Text>Select what to include in the recipe</Text>
                 <Button
                     title="Proceed to select recipe course"
                     onPress={() => {
@@ -109,6 +108,8 @@ const styles = StyleSheet.create({
         margin: 10,
     },
     container: {
-        flex: 1,
-    }
+        flex:1,
+        flexDirection: 'column',
+        backgroundColor: 'rgb(235,28,34)',
+    },
 });

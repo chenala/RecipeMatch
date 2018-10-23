@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Button, Text, Image} from 'react-native';
+import {View, Button, Text, Image, StyleSheet} from 'react-native';
 import { YUMMLY_APP_ID, YUMMLY_APP_KEY } from '../apiKeys';
 import { YUMMLY_API_RECIPE_ID_URL } from '../constants';
 
@@ -48,15 +48,14 @@ class DetailsPage extends React.Component {
     render() {
         const {recipe} = this.props.navigation.state.params;
         const returnValue = this.state.recipe ? (
-            <View>
-                <Text>{this.props.navigation.state.params.recipe.recipeName}</Text>
+            <View style={styles.container}>
+                <Text style={styles.title}>{this.props.navigation.state.params.recipe.recipeName}</Text>
                 <Image style={{width: 90, height: 90}} source={{uri: recipe.imageUrlsBySize[90] }} />
-                <Text>{`Source: ${recipe.sourceDisplayName}`}</Text>
-                <Text>{`Ingredients: ${recipe.ingredients}`}</Text>
-                <Text>{`Duration: ${recipe.totalTimeInSeconds/60}`}</Text>
-                <Text>{`Rating: ${recipe.rating}`}</Text>
-                <Text>{`Course: ${recipe.attributes.course}`}</Text>
-                <Text>{`Flavors: ${recipe.flavors}`}</Text>
+                <Text style={styles.text}>{`Source: ${recipe.sourceDisplayName}`}</Text>
+                <Text style={styles.text}>{`Ingredients: ${recipe.ingredients}`}</Text>
+                <Text style={styles.text}>{`Duration: ${recipe.totalTimeInSeconds/60}`}</Text>
+                <Text style={styles.text}>{`Rating: ${recipe.rating}`}</Text>
+                <Text style={styles.text}>{`Course: ${recipe.attributes.course}`}</Text>
                 <Button
                     title='See Full Recipe'
                     onPress={() => {
@@ -76,5 +75,25 @@ class DetailsPage extends React.Component {
         return returnValue;
     }
 }
+
+const styles = StyleSheet.create({
+    container:{
+        flex:1,
+        flexDirection: 'column',
+        backgroundColor: 'rgb(235,28,34)',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    title: {
+        textAlign: 'center',
+        fontWeight: 'bold',
+        color: 'white',
+        fontSize: 20,
+    },
+    text: {
+        color: 'white',
+        padding: 10,
+    },
+});
 
 export default DetailsPage;

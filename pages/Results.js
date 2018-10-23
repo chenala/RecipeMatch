@@ -81,11 +81,11 @@ class ResultsPage extends React.Component {
                 >
                     <View style={styles.itemContainer}>
                         <Image style={{width: 90, height: 90}} source={{uri: recipeArr[1].imageUrlsBySize[90] }} />
-                        <View>
-                            <Text>{recipeArr[1].recipeName}</Text>
+                        <View style={styles.textContainer}>
+                            <Text style={styles.text}>{recipeArr[1].recipeName}</Text>
                             <View style={styles.bottomTextContainer}>
-                                <Text>{`Duration: ${recipeArr[1].totalTimeInSeconds/60} minutes`}</Text>
-                                <Text>{`Rating: ${recipeArr[1].rating}`}</Text>
+                                <Text style={styles.text}>{`Duration: ${recipeArr[1].totalTimeInSeconds/60} minutes`}</Text>
+                                <Text style={styles.text}>{`Rating: ${recipeArr[1].rating}`}</Text>
                             </View>
                         </View>
                     </View>
@@ -106,10 +106,17 @@ function mapStateToProps(state) {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        flex:1,
+        backgroundColor: 'rgb(235,28,34)',
     },
     scroll: {
         margin: 5,
+    },
+    textContainer: {
+        padding: 10,
+    },
+    text: {
+        color: 'white',
     },
     itemContainer: {
         flexDirection: 'row',

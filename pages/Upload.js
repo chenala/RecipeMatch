@@ -105,14 +105,13 @@ class UploadPage extends React.Component {
             ) : (
                 <View style={styles.button}>
                     <Button title="Take a Photo" onPress={this.callCamera} />
-                    <Text>or</Text>
                     <Button title="Upload an Image" onPress={this.callImageUpload} />
                 </View>
             );
         const continueDisabled = !this.state.pickedImage;
         return (
             <View style={styles.container}>
-            <Text style={styles.textStyle}>Provide your picture of ingredients </Text>
+            <Text style={styles.title}>Provide your picture of ingredients </Text>
                 {imgComponent}
                 <View style={styles.button}>
                     <Button title="Reset Image" onPress={this.resetHandler} />
@@ -146,12 +145,15 @@ function mapDispatchToProps(dispatch) {
 const styles = StyleSheet.create({
     container: {
         alignItems:"center",
+        backgroundColor: 'rgb(235,28,34)',
+        flex: 1,
     },
-    textStyle: {
-        fontWeight:"bold",
-        fontSize:10,
-        textAlign:"center",
-        marginTop:10,
+    title: {
+        textAlign: 'center',
+        fontWeight: 'bold',
+        color: 'white',
+        fontSize: 20,
+        marginTop: 15,
     },
     imageContainer: {
         width: "70%",

@@ -38,7 +38,6 @@ class FilterPage extends React.Component {
         const continueDisabled = conceptElements.numOfSelections <= 0;
             return (
                 <View style={styles.container}>
-                    <Text>Select recipe courses you would like to consider:</Text>
                     <Button
                         title="Proceed to match recipes"
                         onPress={() => {
@@ -119,6 +118,8 @@ const styles = StyleSheet.create({
         margin: 10,
     },
     container: {
-        flex: 1,
+        flex:1,
+        flexDirection: 'column',
+        backgroundColor: 'rgb(235,28,34)',
     },
 });
