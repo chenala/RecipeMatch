@@ -39,12 +39,14 @@ class Ingredients extends React.Component {
                     }}
                 />
                 <ScrollView style={styles.scroll}>
+                    {/*
                     <Button
                         title='Select All'
                         onPress={() => {
                             this.selectAll(this.props.navigation.state.params.conceptsList);
                         }}
                     />
+                    */}
                     {conceptElements.buttonList}
                 </ScrollView>
                 

@@ -23,19 +23,21 @@ class FilterPage extends React.Component {
 
     buildUrl() {
         let url = `${YUMMLY_API_RECIPE_URL}?_app_id=${YUMMLY_APP_ID}&_app_key=${YUMMLY_APP_KEY}`;
+        /*
         Object.entries(this.props.courses).forEach((courseEntry) => {
             url = courseEntry[1].selected ? (
                 url + '&allowedCourse[]=course^course-' + courseEntry[0]
             ) : url;
         });
-        url = url + '&requirePictures=true';
+        */
+        //url = url + '&requirePictures=true';
         return url;
     }
 
     render() {
         if (this.props.courses && Object.keys(this.props.courses).length > 0) {
-        const conceptElements = this.makeElements(COURSES);
-        const continueDisabled = conceptElements.numOfSelections <= 0;
+            const conceptElements = this.makeElements(COURSES);
+            const continueDisabled = conceptElements.numOfSelections <= 0;
             return (
                 <View style={styles.container}>
                     <Button

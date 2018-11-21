@@ -1,5 +1,6 @@
 import React from 'react';
 import {View, Button, Text, TouchableOpacity, Image, ScrollView, StyleSheet} from 'react-native';
+import {YUMMLY_APP_ID, YUMMLY_APP_KEY} from '../apiKeys';
 import {connect} from 'react-redux';
 
 class ResultsPage extends React.Component {
@@ -13,6 +14,7 @@ class ResultsPage extends React.Component {
 
     componentWillMount() {
         const selectedIngredients = Object.values(this.props.ingredients).filter((ingredient) => ingredient.selected);
+        /*
         const recipes = this.getRecipes(this.props.navigation.state.params.url)
             .then((recipesJson) => {
                 // perform ingredient filter
@@ -33,14 +35,38 @@ class ResultsPage extends React.Component {
             .catch((error) => {
                 console.log(error);
             });
+            */
+        //const query_url = this.props.navigation.state.params.url + `?q=${selectedIngredients[0].name}`;
+        //const query_url = this.props.navigation.state.params.url + `?q=hamburger`;
+        
+        const query_url = `http://api.yummly.com/v1/api/recipes?q=${selectedIngredients[0].name}`;
+        this.getRecipes(query_url)
+            .then((recipesJson) => {
+                console.log(`JSON: ${JSON.stringify(recipesJson)}`);
+                recipesJson.matches.forEach((recipe) => {
+                    const newState = Object.assign({}, this.state.recipes);
+                    newState[recipe.id] = recipe;
+                    this.setState({ recipes: newState });
+                });
+                Object.values(this.state.recipes).forEach((recipe) => {
+                    console.log(`RECIPE: ${recipe.recipeName}`);
+                });
+                return Promise.resolve();
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     }
     
     getRecipes(url) {
+        console.log(`URL: ${url}`);
         return fetch(url, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
+                'X-Yummly-App-ID': `${YUMMLY_APP_ID}`,
+                'X-Yummly-App-Key': `${YUMMLY_APP_KEY}`,
             }
         })
         .then((response) => {
@@ -84,7 +110,7 @@ class ResultsPage extends React.Component {
                         <View style={styles.textContainer}>
                             <Text style={styles.text}>{recipeArr[1].recipeName}</Text>
                             <View style={styles.bottomTextContainer}>
-                                <Text style={styles.text}>{`Duration: ${recipeArr[1].totalTimeInSeconds/60} minutes`}</Text>
+                                <Text style={styles.text}>{`Duration: ${recipeArr[1].totalTimeInSeconds/60} minutes `}</Text>
                                 <Text style={styles.text}>{`Rating: ${recipeArr[1].rating}`}</Text>
                             </View>
                         </View>

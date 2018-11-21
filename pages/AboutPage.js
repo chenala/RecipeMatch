@@ -10,7 +10,7 @@ function AboutPage(props) {
             <Text style={styles.text}>Step 3: Choose which courses you would like to include</Text>
             <Text style={styles.text}>Step 4: Click on a recipe to see more details</Text>
             <Text style={styles.text}>Step 5: Click 'See Full Recipe' to get the instructions!</Text>
-            <Text style={styles.text}>Congratulations! Try it yourself!</Text>
+            <Text style={styles.text}>Try it yourself!</Text>
             <Button
                 title="Back"
                 onPress={() => {
