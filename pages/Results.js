@@ -39,23 +39,28 @@ class ResultsPage extends React.Component {
         //const query_url = this.props.navigation.state.params.url + `?q=${selectedIngredients[0].name}`;
         //const query_url = this.props.navigation.state.params.url + `?q=hamburger`;
         
-        const query_url = `http://api.yummly.com/v1/api/recipes?q=${selectedIngredients[0].name}`;
-        this.getRecipes(query_url)
-            .then((recipesJson) => {
-                console.log(`JSON: ${JSON.stringify(recipesJson)}`);
-                recipesJson.matches.forEach((recipe) => {
-                    const newState = Object.assign({}, this.state.recipes);
-                    newState[recipe.id] = recipe;
-                    this.setState({ recipes: newState });
+        let base_url = `http://api.yummly.com/v1/api/recipes?q=`;
+        let i;
+        for (i = 0 ; i < selectedIngredients.length ; i+=1) {
+            query_url = base_url + `+${selectedIngredients[i].name}`;
+        
+            this.getRecipes(query_url)
+                .then((recipesJson) => {
+                    console.log(`JSON: ${JSON.stringify(recipesJson)}`);
+                    recipesJson.matches.forEach((recipe) => {
+                        const newState = Object.assign({}, this.state.recipes);
+                        newState[recipe.id] = recipe;
+                        this.setState({ recipes: newState });
+                    });
+                    Object.values(this.state.recipes).forEach((recipe) => {
+                        console.log(`RECIPE: ${recipe.recipeName}`);
+                    });
+                    return Promise.resolve();
+                })
+                .catch((error) => {
+                    console.log(error);
                 });
-                Object.values(this.state.recipes).forEach((recipe) => {
-                    console.log(`RECIPE: ${recipe.recipeName}`);
-                });
-                return Promise.resolve();
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+        }
     }
     
     getRecipes(url) {
